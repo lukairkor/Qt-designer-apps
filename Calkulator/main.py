@@ -6,7 +6,7 @@ import re
 from functools import partial
 
 path = os.path.dirname(__file__) #uic paths from itself, not the active dir, so path needed
-qtCreatorFile = "Qt designer apps/Calkulator/temple.ui" #Ui file name, from QtDesigner, assumes in same folder as this .py
+qtCreatorFile = "/home/lukas/Programowanie_kod/Do_CV_github/Qt-designer-apps/Calkulator/temple.ui" #Ui file name, from QtDesigner, assumes in same folder as this .py
 
 Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile) #process through pyuic
 
