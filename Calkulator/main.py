@@ -1,17 +1,20 @@
 import sys
 import os
-from PyQt5.QtWidgets import QMainWindow, QApplication
-from PyQt5 import uic
 import re
+from PyQt5 import QtWidgets, uic
 from functools import partial
 
-path = os.path.dirname(__file__) #uic paths from itself, not the active dir, so path needed
-qtCreatorFile = "/home/lukas/Programowanie_kod/Do_CV_github/Qt-designer-apps/Calkulator/temple.ui" #Ui file name, from QtDesigner, assumes in same folder as this .py
+# uic paths from itself, not the active dir, so path needed
+path = os.path.dirname(__file__)
+# Ui file name, from QtDesigner, assumes in same folder as this .py
+qtCreatorFile = "/home/lukas/Programowanie_kod/GitHub/Qt-designer-apps/Calkulator/temple.ui"
 
-Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile) #process through pyuic
+Ui_MainWindow, QtBaseClass = uic.loadUiType(
+    qtCreatorFile)  # process through pyuic
 
-class MyApp(QMainWindow, Ui_MainWindow): #gui class
-    
+
+class MyApp(QtWidgets.QMainWindow, Ui_MainWindow):  # gui class
+
     a = 0
     b = 0
     c = 0
@@ -19,7 +22,7 @@ class MyApp(QMainWindow, Ui_MainWindow): #gui class
     makro3 = 0
     makro4 = 0
     mem = []
-    x =0
+    x = 0
     z = 0
 
     def __init__(self):
@@ -42,13 +45,16 @@ class MyApp(QMainWindow, Ui_MainWindow): #gui class
         self.ui.b9.clicked.connect(partial(self.function, self.ui.b9))
         self.ui.dell.clicked.connect(partial(self.function, self.ui.dell))
 
-        self.ui.b_dzieli.clicked.connect(partial(self.function, self.ui.b_dzieli))
+        self.ui.b_dzieli.clicked.connect(
+            partial(self.function, self.ui.b_dzieli))
         self.ui.b_plus.clicked.connect(partial(self.function, self.ui.b_plus))
-        self.ui.b_minus.clicked.connect(partial(self.function, self.ui.b_minus))
-        self.ui.b_mnozy.clicked.connect(partial(self.function, self.ui.b_mnozy))
+        self.ui.b_minus.clicked.connect(
+            partial(self.function, self.ui.b_minus))
+        self.ui.b_mnozy.clicked.connect(
+            partial(self.function, self.ui.b_mnozy))
         self.ui.rowna.clicked.connect(partial(self.function, self.ui.rowna))
 
-    def function(self, btn): 
+    def function(self, btn):
 
         if btn == self.ui.b0:
             self.mem.append(0)
@@ -59,8 +65,8 @@ class MyApp(QMainWindow, Ui_MainWindow): #gui class
 
         elif btn == self.ui.b2:
             q = 2
-            self.mem = self.mem + [q] 
-            
+            self.mem = self.mem + [q]
+
         elif btn == self.ui.b3:
             self.mem.append(3)
 
@@ -81,33 +87,33 @@ class MyApp(QMainWindow, Ui_MainWindow): #gui class
 
         elif btn == self.ui.b9:
             self.mem.append(9)
-            
+
         elif btn == self.ui.b_dzieli:
             self.makro2 = 1
             self.makro3 = self.z
             self.z = 0
             self.mem = []
             self.ui.lcd.display('-')
-          
-        elif btn ==self.ui.b_plus:
+
+        elif btn == self.ui.b_plus:
             self.makro2 = 2
             self.makro3 = self.z
             self.z = 0
             self.mem = []
             self.ui.lcd.display('-')
-           
+
         elif btn == self.ui.b_minus:
             self.makro2 = 3
             self.makro3 = self.z
             self.z = 0
             self.mem = []
             self.ui.lcd.display('-')
-       
+
         elif btn == self.ui.b_mnozy:
             self.makro2 = 4
             self.makro3 = self.z
             self.z = 0
-            self.mem = [] 
+            self.mem = []
             self.ui.lcd.display('-')
 
         elif btn == self.ui.dell:
@@ -115,11 +121,11 @@ class MyApp(QMainWindow, Ui_MainWindow): #gui class
             self.z = 0
             self.mem = []
             self.makro4 = 0
-            
+
         elif btn == self.ui.rowna:
-            print(self.makro4,' makro4 in rowna\n--------------------------')    
+            print(self.makro4, ' makro4 in rowna\n--------------------------')
             self.equations()
-            self.mem = [] 
+            self.mem = []
 
         for self.x in range(len(self.mem)):
             aa = self.mem[self.x]
@@ -133,58 +139,59 @@ class MyApp(QMainWindow, Ui_MainWindow): #gui class
             self.ui.lcd.display(self.z)
         else:
             self.ui.lcd.display(self.makro4)
-        print(self.makro4,' makro4 in function\n--------------------------')     
+        print(self.makro4, ' makro4 in function\n--------------------------')
 
-    def equations(self):   
-        
-        a=float(self.makro3)
-        b=float(self.z)  
-        print(self.makro4,' makro4 in equations begin\n--------------------------') 
+    def equations(self):
 
-        if self.makro2==1:
-            if self.makro4 ==0:  
+        a = float(self.makro3)
+        b = float(self.z)
+        print(self.makro4, ' makro4 in equations begin\n--------------------------')
+
+        if self.makro2 == 1:
+            if self.makro4 == 0:
                 c = a/b
-                self.makro4=c
+                self.makro4 = c
             else:
-                o=float(self.makro4)  
+                o = float(self.makro4)
                 c = o/b
-                self.makro4=c
-            
-        elif self.makro2==2:
-            if self.makro4 ==0:  
+                self.makro4 = c
+
+        elif self.makro2 == 2:
+            if self.makro4 == 0:
                 c = a+b
-                self.makro4=c
+                self.makro4 = c
             else:
-                o=float(self.makro4)  
+                o = float(self.makro4)
                 c = o+b
-                self.makro4=c
-            
-        elif self.makro2==3:
-            if self.makro4 ==0:
+                self.makro4 = c
+
+        elif self.makro2 == 3:
+            if self.makro4 == 0:
                 c = a-b
-                self.makro4=c
+                self.makro4 = c
             else:
-                o=float(self.makro4)  
+                o = float(self.makro4)
                 c = o-b
-                self.makro4=c
-             
-        elif self.makro2==4:
-            if self.makro4 ==0:  
+                self.makro4 = c
+
+        elif self.makro2 == 4:
+            if self.makro4 == 0:
                 c = a*b
-                self.makro4=c
+                self.makro4 = c
             else:
-                o=float(self.makro4)  
+                o = float(self.makro4)
                 c = o*b
-                self.makro4=c
-        
+                self.makro4 = c
+
         self.makro2 = 5
-        print(a,' a')
-        print(b,' b')
+        print(a, ' a')
+        print(b, ' b')
         # print(c,' c')
-        print(self.makro4,' makro4 in equations end\n--------------------------') 
-        
+        print(self.makro4, ' makro4 in equations end\n--------------------------')
+
+
 if __name__ == "__main__":
-    app = QApplication(sys.argv) #instantiate a QtGui (holder for the app)
+    app = QtWidgets.QApplication(sys.argv)  # instantiate a QtGui (holder for the app)
     window = MyApp()
     window.show()
     sys.exit(app.exec_())
